@@ -1,5 +1,5 @@
 # RPS
-Rock, Paper, Scissors Game in Python 3
+# Rock, Paper, Scissors Game in Python 3
 
 # CLI where users can interact with the application while it is running
 # Application reads in data from a CSV file and displayed in console
