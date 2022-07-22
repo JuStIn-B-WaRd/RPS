@@ -4,6 +4,7 @@ from cgi import print_arguments
 import random
 import string
 import csv
+from xml.dom.minidom import Element
 
 #Result counter variables
 comp_wins = 0
@@ -48,7 +49,7 @@ def Play_Again():
         return
     elif (user_choice.lower()[0] == "n"):
         print("\n***GOODBYE***\n")
-        f = open("test_file.csv", "w", newline="")
+        f = open("test_file.csv", "w", newline="") #'w' will overwrite the information in the file
         tup1 = ("Player Wins", player_wins)
         writer = csv.writer(f)
         writer.writerow(tup1)
@@ -64,8 +65,9 @@ def Play_Again():
         print("\nQUIT TRYING TO BREAK MY CODE. DO IT RIGHT THIS TIME.  ಠ╭╮ಠ\n")
         Play_Again()
 
+#First function called: a main menu of sorts
 def Opening_Choice():
-        user_choice = input("\n1 TO START GAME\n2 TO SEE PREVIOUS SCOREBOARD\n")
+        user_choice = input("\n1 TO START GAME\n2 TO SEE PREVIOUS SCOREBOARD\n>>>")
         if user_choice == "1":
             print("\nLET'S GO:")
         elif user_choice == "2":
@@ -89,9 +91,17 @@ Opening_Choice()
 #Main method loop
 while __name__ == "__main__":
     
-    #Choice function calls
+    #Choice function calls 
+    #Fixes bug by allowing a direct return to the Choose_Option function (fixes recursion problem)
     print("")
     user_choice = Choose_Option()
+    while True:
+        if len(user_choice) < 1: #Prevents crash on null values
+            user_choice = Choose_Option()
+        elif (user_choice.lower()[0] != "r" and user_choice.lower()[0] != "p" and user_choice.lower()[0] != "s"): #Handles str, int, and special exceptions
+            user_choice = Choose_Option()
+        else:
+            break
     comp_choice = Computer_Option()
     print("")
     
